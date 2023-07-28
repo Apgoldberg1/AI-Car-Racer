@@ -1,0 +1,35 @@
+body { 
+    margin:0;
+    background: darkgray;
+    overflow:hidden;
+}
+#verticalButtons{
+    position:fixed;
+    top:0%;
+    left:80%;
+}
+button{
+    width:20vw;
+    height:5vh;
+    font-size:3vh;
+    border-radius:10px;
+}
+#myCanvas{
+    background: rgb(52, 52, 52);
+}
+#graphCanvas{
+    position:fixed;
+    left:80%;
+    top:80%;
+    width:20vw;
+    height:20vh;
+    background: white;
+}
+#inputCanvas{
+    position:fixed;
+    left:80%;
+    top:60%;
+    width:20vw;
+    height:20vh;
+    background: white;
+}
