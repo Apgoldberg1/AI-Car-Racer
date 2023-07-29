@@ -270,7 +270,7 @@ class Car{
         }
         ctx.fill();
         ctx.globalAlpha=tempAlpha;
-        if(this.sensor && drawSensor){
+        if(this.sensor && drawSensor && this.controlType != "KEYS"){
             this.sensor.draw(ctx);
         }
     }

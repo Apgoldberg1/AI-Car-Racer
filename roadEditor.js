@@ -118,10 +118,16 @@ class roadEditor{
         }
         else if(typeof this.lastClicked.index != 'undefined' && this.editMode){
             if(this.lastClicked.list == 1 && this.points.length>1){
-                this.points.splice(this.lastClicked.index,1);
+                this.points.splice(this.lastClicked.index,1);   
+                if(this.lastClicked.index == this.points.length){ //shift index to last point for delete multiple times
+                    this.lastClicked.index--;
+                }
             }
             else if (this.lastClicked.list==2 && this.points2.length>1){
                 this.points2.splice(this.lastClicked.index,1);
+                if(this.lastClicked.index == this.points2.length){
+                    this.lastClicked.index--;
+                }
             }
         }
     }

@@ -5,9 +5,10 @@ canvas.height=window.innerHeight;
 
 const startInfo = {x: canvas.width - canvas.width/5, y: canvas.height/2, startWidth: canvas.width/40};
 const road=new Road(startInfo);
-const N=2;
+var N=2;
 var seconds = 2000;
 var cars;
+var playerCar;
 let bestCar;
 // cars[0].update(road.borders, road.checkPointList);//create polygon
 let pause=true;
@@ -15,9 +16,10 @@ var phase = 0; //0 welcome, 1 track, 2 checkpoints, 3 physics, 4 training
 nextPhase();
 function begin(){
     pause=false;
+    playerCar = new Car(startInfo.x,startInfo.y,30,50,"KEYS",12);
     cars=generateCars(N);
     bestCar = cars[1];
-    cars[0].update(road.borders, road.checkPointList);//create polygon
+    // cars[0].update(road.borders, road.checkPointList);//create polygon
     frameCount=0;
     if(localStorage.getItem("bestBrain")){
         for(let i = 0; i<cars.length;i++){
@@ -48,7 +50,6 @@ function generateCars(N){
     for(let i=0; i<N; i++){
         cars.push(new Car(startInfo.x,startInfo.y,30,50,"AI",5));
     }
-    cars.push(new Car(startInfo.x,startInfo.y,30,50,"KEYS",12));
     return cars;
 }
 
@@ -81,6 +82,7 @@ function animate(){
             for(let i=1;i<cars.length;i++){
                 cars[i].update(road.borders, road.checkPointList);
             }
+            playerCar.update(road.borders, road.checkPointList);
             // car.update(road.borders, road.checkPointList);
 
             bestCar=cars.find(
@@ -98,6 +100,7 @@ function animate(){
             }
             ctx.globalAlpha=1;
             bestCar.draw(ctx,"blue",true);
+            playerCar.draw(ctx,"red",true);
 
             ctx.restore();
         }

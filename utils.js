@@ -43,7 +43,12 @@ function phaseToLayout(phase){
     let rightPanel = document.getElementById("verticalButtons");
     switch(phase){
         case 1:
-            rightPanel.innerHTML = "<button onclick='saveTrack()'>Save Track</button><button onclick='deleteTrack()'>Delete Track</button><button onclick='deleteLastPoint()'>Delete Point</button><button onclick='nextPhase()'>Next</button>";
+            // rightPanel.innerHTML = "<button onclick='saveTrack()'>Save Track</button><button onclick='deleteTrack()'>Delete Track</button><button onclick='deleteLastPoint()'>Delete Point</button><button onclick='nextPhase()'>Next</button>";
+            rightPanel.innerHTML = `
+                <button onclick='saveTrack()'>Save Track</button>
+                <button onclick='deleteTrack()'>Delete Track</button><button onclick='deleteLastPoint()'>Delete Point</button>
+                <button onclick='nextPhase()'>Next</button>
+            `;
             break;
         case 2:
             rightPanel.innerHTML = "<button onclick='backPhase()'>Back</button><button onclick='saveTrack()'>save track</button><button onclick='deleteLastPoint()'>delete</button><button onclick='nextPhase()'>Next</button>";
@@ -52,7 +57,7 @@ function phaseToLayout(phase){
             phaseToLayout(phase+1);
             break;
         case 4:
-            rightPanel.innerHTML = "<button onclick='backPhase()'>Back</button><button onclick='pauseGame()'>Pause</button>";
+            rightPanel.innerHTML = "<button onclick='backPhase()'>Back</button><button id='pause' onclick='pauseGame()'>Pause</button><input type='number' onchange='setN(this.value)'></input>";
             break;
 
     }

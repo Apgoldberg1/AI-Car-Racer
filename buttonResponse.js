@@ -1,5 +1,7 @@
 function pauseGame(){
+    console.log("pause");
     pause=!pause;
+    document.getElementById("pause").textContent = pause?"Play":"Pause";
 }
 function save(){
     const progressVal = bestCar.checkPointsCount+bestCar.laps*road.checkPointList.length/seconds;
@@ -83,4 +85,10 @@ function backPhase(){
     }
     phase-=2;
     nextPhase();
+}
+function setN(value){
+    N=value;
+}
+function setSeconds(value){
+    seconds=value;
 }
