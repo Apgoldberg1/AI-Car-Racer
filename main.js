@@ -64,7 +64,9 @@ function nextBatch(){
     else{
         localStorage.setItem("trainCount", JSON.stringify(1));
     }
-    save();
+    if(bestCar){
+        save();
+    }
     begin();
     // location.reload();
 }
@@ -95,7 +97,7 @@ function animate(){
                     ...cars.map(c=>c.checkPointsCount+c.laps*road.checkPointList.length)
             ));
             // cars[0] = bestCar;
-            inputVisual(bestCar.controls);
+            
 
             
             
@@ -104,7 +106,10 @@ function animate(){
                 cars[i].draw(ctx,"blue");
             }
             ctx.globalAlpha=1;
-            bestCar.draw(ctx,"blue",true);
+            if(bestCar){
+                inputVisual(bestCar.controls);
+                bestCar.draw(ctx,"blue",true);
+            }
             playerCar.draw(ctx,"red",true);
 
             ctx.restore();
