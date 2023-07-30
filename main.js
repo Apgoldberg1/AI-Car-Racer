@@ -5,21 +5,27 @@ const ctx = canvas.getContext("2d");
 canvas.width = 1600;
 canvas.height = 900;
 
-const startInfo = {x: canvas.width - canvas.width/5, y: canvas.height/2, startWidth: canvas.width/40};
+const startInfo = {x: canvas.width - canvas.width/10, y: canvas.height/2, startWidth: canvas.width/40};
 const road=new Road(startInfo);
 var N = 2;
-var seconds = -1;
+var nextSeconds = -1;
+var seconds;
 var mutateValue = .3;
 var cars;
 var playerCar;
 let bestCar;
+
+var acceleration = .1;
+var breakAccel = -.1;
 // cars[0].update(road.borders, road.checkPointList);//create polygon
 let pause=true;
 var phase = 0; //0 welcome, 1 track, 2 checkpoints, 3 physics, 4 training
+var maxSpeed = 5;
 nextPhase();
 function begin(){
+    seconds = nextSeconds;
     pause=false;
-    playerCar = new Car(startInfo.x,startInfo.y,30,50,"KEYS",12);
+    playerCar = new Car(startInfo.x,startInfo.y,30,50,"KEYS",maxSpeed);
     cars=generateCars(N);
     // cars[0].update(road.borders, road.checkPointList);//create polygon
     frameCount=0;
@@ -51,7 +57,7 @@ animate();
 function generateCars(N){
     const cars = [];
     for(let i=0; i<N; i++){
-        cars.push(new Car(startInfo.x,startInfo.y,30,50,"AI",5));
+        cars.push(new Car(startInfo.x,startInfo.y,30,50,"AI",maxSpeed));
     }
     return cars;
 }
@@ -75,6 +81,10 @@ function animate(){
     canvas.style.width = String(Math.min(window.innerWidth*.8, 16/9*window.innerHeight)) + "px";
     canvas.style.height = String(Math.min(9/16*window.innerWidth*.8, window.innerHeight)) + "px";
     road.draw(ctx);
+    if(phase==3){
+        playerCar.update(road.borders, road.checkPointList);
+        playerCar.draw(ctx,"red",true);
+    }
     if(phase==4){
         if(frameCount==60*seconds){
             nextBatch();

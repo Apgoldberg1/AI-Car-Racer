@@ -5,13 +5,16 @@ class Car{
         this.y=y;
         this.width=width;
         this.height=height;
+        if(controlType == "KEYS"){
+            this.invincible=false;
+        }
 
         this.velocity={x:0,y:0};
         this.speed=0;
-        this.acceleration=0.1;
+        this.acceleration=acceleration;
         this.breakAccel=.1;
         this.maxSpeed=maxSpeed;
-        this.friction=0.005;
+        this.friction=0.05;
         this.angle=0;
         this.damaged=false;
         // this.driftVelocity={x:0,y:0};
@@ -41,7 +44,9 @@ class Car{
         if(!this.damaged){
             this.#move();
             this.polygon=this.#createPolygon();
-            this.damaged=this.#assessDamage(roadBorders);
+            if(!this.controlType == "KEYS" || !this.invincible){
+                this.damaged=this.#assessDamage(roadBorders);
+            }
             let checkPoint=this.#assessCheckpoint(checkPointList);
             if (checkPoint!=-1 && !this.checkPointsPassed.includes(checkPoint)){
                 this.checkPointsCount++;
@@ -161,10 +166,8 @@ class Car{
     //     this.y-=Math.cos(this.angle)*this.speed;
     // }
     #move(){
-        //make car drive direction it points
-        //make reverse direction get detected since speed is aboslute
         this.speed=Math.hypot(this.velocity.x, this.velocity.y);
-        const windAccel = this.speed/this.maxSpeed*(this.acceleration-.05);
+        const windAccel = this.speed/this.maxSpeed*(.9*this.acceleration); //wind resistance, acceleration decreases to .1saccels
         if(this.controls.forward){
             this.velocity.x+=Math.sin(this.angle)*(this.acceleration);
             this.velocity.y+=Math.cos(this.angle)*(this.acceleration);
@@ -181,7 +184,7 @@ class Car{
         if(this.speed!=0){
             // const flip=Math.abs(Math.abs(Math.atan2(this.velocity.y+.001, this.velocity.x))-this.angle)<Math.PI/2?1:-1;
             const flip=this.speed>0?1:-1;
-            const slide=this.speed*Math.sin(.03);
+            //const slide=this.speed*Math.sin(.03);
             if(this.controls.left){
                 if(this.speed > this.slideSpeed){
                     this.slide = true;

@@ -1,5 +1,4 @@
 function pauseGame(){
-    console.log("pause");
     pause=!pause;
     document.getElementById("pause").textContent = pause?"Play":"Pause";
 }
@@ -65,9 +64,11 @@ function nextPhase(){
             phaseToLayout(phase);
             break;
         case 3:
+            road.roadEditor.checkPointModeChange(false);
+            road.roadEditor.editModeChange(false);
+            phaseToLayout(phase);
             saveTrack();            
             submitTrack();
-            nextPhase();
             break;
         case 4:
             begin();
@@ -80,9 +81,6 @@ function nextPhase(){
     }
 }
 function backPhase(){
-    if(phase==4){
-        phase-=1;
-    }
     phase-=2;
     nextPhase();
 }
@@ -90,11 +88,19 @@ function setN(value){
     N=value;
 }
 function setSeconds(value){
-    seconds=value;
+    nextSeconds=value;
 }
 function setMutateValue(value){
     mutateValue=value;
 }
 function restartBacth(){
     begin();
+}
+function setMaxSpeed(value){
+    maxSpeed = value;
+    begin();
+}
+function hideTrack(){
+    playerCar.invincible = !playerCar.invincible;
+    document.getElementById('hide').innerText = playerCar.invincible?"Invincible Off":"Invincible On";
 }

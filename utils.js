@@ -59,7 +59,16 @@ function phaseToLayout(phase){
             `;
             break;
         case 3:
-            phaseToLayout(phase+1);
+            //add show/hide track
+            rightPanel.innerHTML = `   
+            <button onclick='backPhase()'>Back</button>
+            <button onclick='savePhysics()'>Save Physics</button>
+            <button id='hide' onclick='hideTrack();'>Invincible On</button>
+            <input type='number' value=5 onchange='setMaxSpeed(this.value)'>Max Speed</input>
+            <input type='number' value=10 onchange=''>Drift</input>
+            <input type='number' value=.3 onchange='setMutateValue(this.value)'>Acceleratioin</input>
+            <button onclick='nextPhase()'>Next</button>
+            `;
             break;
         case 4:
             rightPanel.innerHTML = `
@@ -72,6 +81,7 @@ function phaseToLayout(phase){
             <input type='number' value=.3 onchange='setMutateValue(this.value)'>Mutation</input>
             `;
             setSeconds(10);
+            begin();
             break;
 
     }
