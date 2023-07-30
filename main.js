@@ -16,7 +16,7 @@ var playerCar;
 let bestCar;
 
 var acceleration = .1;
-var breakAccel = -.1;
+var breakAccel = .1;
 // cars[0].update(road.borders, road.checkPointList);//create polygon
 let pause=true;
 var phase = 0; //0 welcome, 1 track, 2 checkpoints, 3 physics, 4 training

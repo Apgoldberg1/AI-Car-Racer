@@ -166,27 +166,34 @@ class Car{
     //     this.y-=Math.cos(this.angle)*this.speed;
     // }
     #move(){
-        this.speed=Math.hypot(this.velocity.x, this.velocity.y);
-        const windAccel = this.speed/this.maxSpeed*(.9*this.acceleration); //wind resistance, acceleration decreases to .1saccels
+        this.speed=Math.sign(this.speed)*Math.hypot(this.velocity.x, this.velocity.y);
+        const windAccel = this.speed>0?this.speed/this.maxSpeed*(.9*this.acceleration):this.speed/this.maxSpeed*(.9*this.breakAccel); //wind resistance, acceleration decreases to .1saccels
         if(this.controls.forward){
+            this.speed+=this.acceleration;
             this.velocity.x+=Math.sin(this.angle)*(this.acceleration);
             this.velocity.y+=Math.cos(this.angle)*(this.acceleration);
         }
         if(this.controls.reverse){
+            this.speed-=this.breakAccel;
             this.velocity.x-=Math.sin(this.angle)*(this.breakAccel);
             this.velocity.y-=Math.cos(this.angle)*(this.breakAccel);
         }
-        this.speed=Math.hypot(this.velocity.x, this.velocity.y);
-        if(this.speed<this.friction){
-            this.velocity.x=0;
-            this.velocity.y=0;
+        // this.speed=Math.hypot(this.velocity.x, this.velocity.y);
+        // if(Math.abs(this.speed)<this.friction){
+        //     this.velocity.x=0;
+        //     this.velocity.y=0;
+        //     this.speed=0;
+        // }
+        if(!this.controls.left && !this.controls.right && this.speed < .8*this.slideSpeed){
+            this.slide=false;
         }
         if(this.speed!=0){
             // const flip=Math.abs(Math.abs(Math.atan2(this.velocity.y+.001, this.velocity.x))-this.angle)<Math.PI/2?1:-1;
             const flip=this.speed>0?1:-1;
+            console.log(flip);
             //const slide=this.speed*Math.sin(.03);
             if(this.controls.left){
-                if(this.speed > this.slideSpeed){
+                if(Math.abs(this.speed) > this.slideSpeed){
                     this.slide = true;
                 }
                 this.angle+=0.03*flip;
@@ -194,7 +201,7 @@ class Car{
             //     this.driftVelocity.y+=slide*Math.cos(this.angle)*flip*.01;
             }
             if(this.controls.right){
-                if(this.speed > this.slideSpeed){
+                if(Math.abs(this.speed) > this.slideSpeed){
                     this.slide = true;
                 }
                 this.angle-=0.03*flip;
@@ -217,42 +224,50 @@ class Car{
             //     }
              
             // }
+            if(this.speed < .4*this.slideSpeed){        //find lerp alternative instead
+                this.slide=false;
+            }
         }
-        if(!this.controls.left && !this.controls.right && this.speed < this.slideSpeed){
-            this.slide=false;
-        }
-        this.speed=Math.hypot(this.velocity.x, this.velocity.y);
+        // this.speed=Math.hypot(this.velocity.x, this.velocity.y);
 
-     
         if(this.speed>this.maxSpeed){
             const scalar = this.maxSpeed/this.speed;
             this.velocity.x*=scalar;
             this.velocity.y*=scalar;
+            this.speed=this.maxSpeed;
         }
-       
-        else if(this.speed>0){
-            this.velocity.x-=Math.abs(Math.sin(this.angle))*(this.friction+windAccel)*Math.sign(this.velocity.x);
-            this.velocity.y-=Math.abs(Math.cos(this.angle))*(this.friction+windAccel)*Math.sign(this.velocity.y);
+        else if (this.speed < -this.maxSpeed/2){
+            this.speed=-this.maxSpeed/2;
         }
-        else if(this.speed<0){
-            this.velocity.x+=(this.friction+windAccel)*Math.sign(this.velocity.x);
-            this.velocity.y+=(this.friction+windAccel)*Math.sign(this.velocity.y);
+        if(Math.abs(this.speed) > windAccel){
+            this.speed-=windAccel*Math.sign(this.speed);
+            this.velocity.x-=Math.abs(Math.sin(this.angle))*(windAccel)*Math.sign(this.velocity.x)*Math.sign(this.speed); //need sign and abs bc we want to slow against drift velocity not with angle like breaking
+            this.velocity.y-=Math.abs(Math.cos(this.angle))*(windAccel)*Math.sign(this.velocity.y)*Math.sign(this.speed);
         }
-        this.speed=Math.hypot(this.velocity.x, this.velocity.y);
+        // else if(this.speed<0){
+        //     this.velocity.x+=(this.friction+windAccel)*Math.sign(this.velocity.x);
+        //     this.velocity.y+=(this.friction+windAccel)*Math.sign(this.velocity.y);
+        // }
+        //this.speed=Math.hypot(this.velocity.x, this.velocity.y);
         // const interpolateVector = {x:this.speed*Math.sin(this.angle),y:this.speed*Math.cos(this.angle)};
-        if(this.speed>this.slideSpeed){
+        if(this.slide){
             this.velocity.x = lerp(this.velocity.x, this.speed*Math.sin(this.angle), this.maxSpeed/(this.speed+.001)*.01);
             this.velocity.y = lerp(this.velocity.y, this.speed*Math.cos(this.angle), this.maxSpeed/(this.speed+.001)*.01);
         }
-       
-        if(Math.abs(Math.abs(this.velocity.x)-this.speed*Math.sin(this.angle))<.02 && Math.abs(Math.abs(this.velocity.y)-this.speed*Math.sin(this.angle))<.02){
-            this.velocity.x=this.speed*Math.sin(this.angle);
-            this.velocity.y=this.speed*Math.cos(this.angle);
+        else{
+            // console.log("normalspeed");
+            // this.velocity.x=this.speed*Math.sin(this.angle);
+            // this.velocity.y=this.speed*Math.cos(this.angle);
         }
-
+       
+        //prob don't need
+        // if(Math.abs(Math.abs(this.velocity.x)-this.speed*Math.sin(this.angle))<.02 && Math.abs(Math.abs(this.velocity.y)-this.speed*Math.sin(this.angle))<.02){
+        //     this.velocity.x=this.speed*Math.sin(this.angle);
+        //     this.velocity.y=this.speed*Math.cos(this.angle);
+        // }
         this.x-=this.velocity.x;
         this.y-=this.velocity.y;
-        this.speed=Math.hypot(this.velocity.x, this.velocity.y);
+        // this.speed=Math.hypot(this.velocity.x, this.velocity.y);
     }
 
     draw(ctx,color,drawSensor=false){
