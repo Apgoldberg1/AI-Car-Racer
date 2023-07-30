@@ -95,3 +95,6 @@ function setSeconds(value){
 function setMutateValue(value){
     mutateValue=value;
 }
+function restartBacth(){
+    begin();
+}

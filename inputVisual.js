@@ -1,16 +1,21 @@
 function inputVisual(controlsArray){
     const inputCanvas=document.getElementById("inputCanvas");
     const inputCtx = inputCanvas.getContext("2d");
+    const rectHeight=130;
+    const rectWidth=130;
+    inputCanvas.width = 600;
+    inputCanvas.height = 300;
+    inputCanvas.style.width = "20vw";
+    inputCanvas.style.height = "10vw";
 
-   boxColor({x:inputCanvas.width/2,y:50}, controlsArray.forward,inputCtx);
-   boxColor({x:inputCanvas.width/2,y:inputCanvas.height-50}, controlsArray.reverse,inputCtx);
-   boxColor({x:inputCanvas.width/4,y:inputCanvas.height/2}, controlsArray.left,inputCtx);
-   boxColor({x:3*inputCanvas.width/4,y:inputCanvas.height/2}, controlsArray.right,inputCtx);
+   boxColor({x:inputCanvas.width/2,y:inputCanvas.height - (.25*inputCanvas.width+rectHeight/2)}, controlsArray.forward, rectWidth, rectHeight, inputCtx);
+   boxColor({x:inputCanvas.width/2,y:inputCanvas.height - rectHeight/2 - 10}, controlsArray.reverse, rectWidth, rectHeight, inputCtx);
+   boxColor({x:inputCanvas.width/4,y:inputCanvas.height - rectHeight/2 - 10}, controlsArray.left, rectWidth, rectHeight, inputCtx);
+   boxColor({x:3*inputCanvas.width/4,y:inputCanvas.height - rectHeight/2 - 10}, controlsArray.right, rectWidth, rectHeight, inputCtx);
 
 }
-function boxColor(coordinate, on, inputCtx){
-    const rectHeight=50;
-    const rectWidth=50;
+function boxColor(coordinate, on, rectWidth, rectHeight, inputCtx){
+
     inputCtx.beginPath();
     inputCtx.fillStyle = on?"blue":"white";
     inputCtx.lineWidth = 4;

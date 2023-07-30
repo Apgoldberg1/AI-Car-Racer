@@ -66,6 +66,7 @@ function phaseToLayout(phase){
             <button onclick='backPhase()'>Back</button>
             <button id='pause' onclick='pauseGame()'>Pause</button>
             <button onclick='destroyBrain(); nextBatch();'>Reset Brain</button>
+            <button onclick='restartBacth();'>Restart Batch</button>
             <input type='number' value=100 onchange='setN(this.value)'>Batch Size</input>
             <input type='number' value=10 onchange='setSeconds(this.value)'>Round Length</input>
             <input type='number' value=.3 onchange='setMutateValue(this.value)'>Mutation</input>
