@@ -16,7 +16,7 @@ function save(){
     localStorage.setItem("oldBestBrain",(localStorage.getItem("bestBrain")));
     localStorage.setItem("bestBrain",JSON.stringify(bestCar.brain));
 }
-function destroy(){
+function destroyBrain(){
     localStorage.removeItem("bestBrain");
 }
 function submitTrack(){
@@ -91,4 +91,7 @@ function setN(value){
 }
 function setSeconds(value){
     seconds=value;
+}
+function setMutateValue(value){
+    mutateValue=value;
 }

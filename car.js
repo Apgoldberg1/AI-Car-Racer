@@ -34,6 +34,7 @@ class Car{
             );
         }
         this.controls=new Controls(controlType);
+        this.polygon=this.#createPolygon();
     }
 
     update(roadBorders, checkPointList){

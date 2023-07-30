@@ -132,12 +132,21 @@ class roadEditor{
         }
     }
 
-    getPosition(event) {
-        var rect = this.canvas.getBoundingClientRect();
-        var x = event.clientX - rect.left;
-        var y = event.clientY - rect.top;
-        return {x, y};
-    }
+    // getPosition(event) {
+    //     var rect = this.canvas.getBoundingClientRect();
+    //     var x = event.clientX - rect.left;
+    //     var y = event.clientY - rect.top;
+    //     return {x, y};
+    // }
+    getPosition(evt) {
+        var rect = this.canvas.getBoundingClientRect(), // abs. size of element
+        scaleX = this.canvas.width / rect.width,    // relationship bitmap vs. element for x
+        scaleY = this.canvas.height / rect.height;  // relationship bitmap vs. element for y
+        var x = (evt.clientX - rect.left) * scaleX;
+        var y = (evt.clientY - rect.top) * scaleY;
+        return {x,y};
+      }
+      
 
     drawCircles() {
         if(!this.checkPointMode){
@@ -184,19 +193,19 @@ class roadEditor{
             let rightClick = e.button == 2; //gets right click
             let leftClick = e.button == 0;
             road.roadEditor.drag_point = road.roadEditor.getPointAt(pos.x, pos.y);
-            if (leftClick && !road.roadEditor.checkPointMode){
+            if (leftClick && !road.roadEditor.checkPointMode && road.roadEditor.editMode){
                 if (road.roadEditor.drag_point == -1) {
                     road.roadEditor.points.push(pos);
                     road.roadEditor.redraw();
                 }
             }
-            else if (rightClick && !road.roadEditor.checkPointMode){
+            else if (rightClick && !road.roadEditor.checkPointMode && road.roadEditor.editMode){
                 if (road.roadEditor.drag_point == -1) {
                     road.roadEditor.points2.push(pos);
                     road.roadEditor.redraw();
                 }
             }
-            else if(road.roadEditor.checkPointMode){
+            else if(road.roadEditor.checkPointMode && road.roadEditor.editMode){
                 if (road.roadEditor.drag_point == -1) {
                     road.roadEditor.checkPointListEditor.push([pos,{x:pos.x+100,y:pos.y}]);
                     road.roadEditor.redraw();

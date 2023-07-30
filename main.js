@@ -1,12 +1,15 @@
 const canvas=document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
-canvas.width=window.innerWidth*.8;
-canvas.height=window.innerHeight;
+// canvas.width=window.innerWidth*.8;
+// canvas.height=window.innerHeight;
+canvas.width = 1600;
+canvas.height = 900;
 
 const startInfo = {x: canvas.width - canvas.width/5, y: canvas.height/2, startWidth: canvas.width/40};
 const road=new Road(startInfo);
-var N=2;
-var seconds = 2000;
+var N = 2;
+var seconds = -1;
+var mutateValue = .3;
 var cars;
 var playerCar;
 let bestCar;
@@ -18,18 +21,18 @@ function begin(){
     pause=false;
     playerCar = new Car(startInfo.x,startInfo.y,30,50,"KEYS",12);
     cars=generateCars(N);
-    bestCar = cars[1];
     // cars[0].update(road.borders, road.checkPointList);//create polygon
     frameCount=0;
     if(localStorage.getItem("bestBrain")){
         for(let i = 0; i<cars.length;i++){
             cars[i].brain=JSON.parse(localStorage.getItem("bestBrain"));
-            if(i!=1){
-                NeuralNetwork.mutate(cars[i].brain,.001);
+            if(i!=0){
+                NeuralNetwork.mutate(cars[i].brain,mutateValue);
             }
         }
         // bestCar.brain=JSON.parse(localStorage.getItem("bestBrain"));
     }
+    bestCar = cars[0];
 }
 
 // if(localStorage.getItem("bestBrain")){
@@ -67,6 +70,8 @@ function nextBatch(){
 }
 var frameCount = 0;
 function animate(){
+    canvas.style.width = String(Math.min(window.innerWidth*.8, 16/9*window.innerHeight)) + "px";
+    canvas.style.height = String(Math.min(9/16*window.innerWidth*.8, window.innerHeight)) + "px";
     road.draw(ctx);
     if(phase==4){
         if(frameCount==60*seconds){
@@ -79,7 +84,7 @@ function animate(){
 
         if(!pause){
             frameCount+=1;
-            for(let i=1;i<cars.length;i++){
+            for(let i=0;i<cars.length;i++){
                 cars[i].update(road.borders, road.checkPointList);
             }
             playerCar.update(road.borders, road.checkPointList);
@@ -89,13 +94,13 @@ function animate(){
                 c=>(c.checkPointsCount+c.laps*road.checkPointList.length)==Math.max(
                     ...cars.map(c=>c.checkPointsCount+c.laps*road.checkPointList.length)
             ));
-            cars[0] = bestCar;
+            // cars[0] = bestCar;
             inputVisual(bestCar.controls);
 
             
             
             ctx.globalAlpha=.2;
-            for(let i=1;i<cars.length;i++){
+            for(let i=0;i<cars.length;i++){
                 cars[i].draw(ctx,"blue");
             }
             ctx.globalAlpha=1;
