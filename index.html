@@ -5,7 +5,9 @@
 </head>
 
 <body>
-    <canvas id="myCanvas"></canvas>
+    <div class="container" id="blur" >
+        <div class="content">
+            <canvas id="myCanvas"></canvas>
     <canvas id="graphCanvas"></canvas>
     <canvas id="inputCanvas"></canvas>
     <div id="verticalButtons">
@@ -41,5 +43,28 @@
     <script src="car.js"></script>
     <script src="buttonResponse.js"></script>
     <script src="main.js"></script>
+            <a href="#" onclick="toggle()">Back to Welcome</a>
+        </div>
+    </div>
+    <div id="popup">
+        <h1> Welcome! </h1>
+            <h3> This is a super cool racer that you will enjoy. </h3>
+        <a href="#" onclick="toggle()"> CONTINUE </a>
+    </div>
+    <script type="text/javascript">
+        window.onload = function() {
+            var blur = document.getElementById('blur');
+            blur.classList.toggle('active');
+            var popup = document.getElementById('popup');
+            popup.classList.toggle('active');
+        }
+        function toggle() {
+                        var blur = document.getElementById('blur');
+                        blur.classList.toggle('active');
+                        var popup = document.getElementById('popup');
+                        popup.classList.toggle('active');
+        }
+    </script>
 </body>
+
 </html>
