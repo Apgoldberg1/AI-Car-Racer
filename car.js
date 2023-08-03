@@ -6,19 +6,20 @@ class Car{
         this.width=width;
         this.height=height;
         if(controlType == "KEYS"){
-            this.invincible=false;
+            this.invincible=invincible;
         }
 
         this.velocity={x:0,y:0};
         this.speed=0;
-        this.acceleration=acceleration;
-        this.breakAccel=.1;
+        this.acceleration=maxSpeed/50;
+        this.breakAccel=maxSpeed/60;
         this.maxSpeed=maxSpeed;
-        this.friction=0.05;
+        this.friction=0.02;
         this.angle=0;
         this.damaged=false;
         // this.driftVelocity={x:0,y:0};
-        this.slideSpeed=3.5;
+        this.slideSpeed=traction*this.maxSpeed;
+        this.traction = traction;
         this.slide=false;
 
         this.checkPointsCount = 0;
@@ -70,6 +71,9 @@ class Car{
                 this.delayCounter=0;
                 this.damaged=false;
                 this.delayCounter=0;
+                this.slide=false;
+                this.checkPointsCount = 0;
+                this.checkPointsPassed = [];
             }
  
         }
@@ -127,147 +131,99 @@ class Car{
         });
         return points;
     }
-    // #move(){
-    //     if(this.controls.forward){
-    //         this.speed+=this.acceleration-this.speed/this.maxSpeed*(this.acceleration-.05);
-    //     }
-    //     if(this.controls.reverse){
-    //         this.speed-=this.breakAccel;
-    //     }
-
-    //     if(this.speed>this.maxSpeed){
-    //         this.speed=this.maxSpeed;
-    //     }
-    //     if(this.speed<-this.maxSpeed/2){
-    //         this.speed=-this.maxSpeed/2;
-    //     }
-
-    //     if(this.speed>0){
-    //         this.speed-=this.friction+this.speed/this.maxSpeed*.1;
-    //     }
-    //     if(this.speed<0){
-    //         this.speed+=this.friction;
-    //     }
-    //     if(Math.abs(this.speed)<this.friction){
-    //         this.speed=0;
-    //     }
-
-    //     if(this.speed!=0){
-    //         const flip=this.speed>0?1:-1;
-    //         if(this.controls.left){
-    //             this.angle+=0.03*flip;
-    //         }
-    //         if(this.controls.right){
-    //             this.angle-=0.03*flip;
-    //         }
-    //     }
-
-    //     this.x-=Math.sin(this.angle)*this.speed;
-    //     this.y-=Math.cos(this.angle)*this.speed;
-    // }
+    
     #move(){
-        this.speed=Math.sign(this.speed)*Math.hypot(this.velocity.x, this.velocity.y);
-        const windAccel = this.speed>0?this.speed/this.maxSpeed*(.9*this.acceleration):this.speed/this.maxSpeed*(.9*this.breakAccel); //wind resistance, acceleration decreases to .1saccels
+        //handle acceleration and breaking
         if(this.controls.forward){
             this.speed+=this.acceleration;
             this.velocity.x+=Math.sin(this.angle)*(this.acceleration);
             this.velocity.y+=Math.cos(this.angle)*(this.acceleration);
         }
-        if(this.controls.reverse){
+        if(this.controls.reverse && (!this.slide || this.speed>.5)){
             this.speed-=this.breakAccel;
             this.velocity.x-=Math.sin(this.angle)*(this.breakAccel);
             this.velocity.y-=Math.cos(this.angle)*(this.breakAccel);
         }
-        // this.speed=Math.hypot(this.velocity.x, this.velocity.y);
-        // if(Math.abs(this.speed)<this.friction){
-        //     this.velocity.x=0;
-        //     this.velocity.y=0;
-        //     this.speed=0;
-        // }
-        if(!this.controls.left && !this.controls.right && this.speed < .8*this.slideSpeed){
-            this.slide=false;
-        }
+        //turning
         if(this.speed!=0){
-            // const flip=Math.abs(Math.abs(Math.atan2(this.velocity.y+.001, this.velocity.x))-this.angle)<Math.PI/2?1:-1;
             const flip=this.speed>0?1:-1;
-            console.log(flip);
-            //const slide=this.speed*Math.sin(.03);
             if(this.controls.left){
                 if(Math.abs(this.speed) > this.slideSpeed){
                     this.slide = true;
                 }
                 this.angle+=0.03*flip;
-            //     this.driftVelocity.x+=slide*Math.sin(this.angle)*flip*.01;
-            //     this.driftVelocity.y+=slide*Math.cos(this.angle)*flip*.01;
             }
             if(this.controls.right){
                 if(Math.abs(this.speed) > this.slideSpeed){
                     this.slide = true;
                 }
                 this.angle-=0.03*flip;
-                // this.driftVelocity.x+=slide*Math.sin(this.angle)*flip*.2;
-                // this.driftVelocity.y+=slide*Math.cos(this.angle)*flip*.2;
-                // const normVelo = {x:-this.velocity.y/this.speed,y:this.velocity.x/this.speed}
-                // this.driftVelocity.x=lerp(this.driftVelocity.x,-normVelo.y*Math.hypot(this.driftVelocity.x, this.driftVelocity.y),.001);
-                // this.driftVelocity.y=lerp(this.driftVelocity.y,normVelo.x*Math.hypot(this.driftVelocity.x, this.driftVelocity.y),.001);
-            }
-            // else {
-            //     // console.log(this.driftVelocity.x);
-            //     // console.log(this.driftVelocity.y);
-            //     if(Math.hypot(this.driftVelocity.x, this.driftVelocity.y) < .0001){
-            //         this.driftVelocity.x=0;
-            //         this.driftVelocity.y=0;
-            //     }
-            //     else{
-            //         this.driftVelocity.x=lerp(this.driftVelocity.x,0,.1);
-            //         this.driftVelocity.y=lerp(this.driftVelocity.y,0,.1);
-            //     }
-             
-            // }
-            if(this.speed < .4*this.slideSpeed){        //find lerp alternative instead
-                this.slide=false;
             }
         }
-        // this.speed=Math.hypot(this.velocity.x, this.velocity.y);
-
-        if(this.speed>this.maxSpeed){
-            const scalar = this.maxSpeed/this.speed;
+        //topSpeed
+        if(Math.hypot(this.velocity.x,this.velocity.y)>this.maxSpeed){
+            const scalar = this.maxSpeed/Math.hypot(this.velocity.x,this.velocity.y);
             this.velocity.x*=scalar;
             this.velocity.y*=scalar;
             this.speed=this.maxSpeed;
         }
         else if (this.speed < -this.maxSpeed/2){
+            const scalar=(this.maxSpeed/2)/Math.hypot(this.velocity.x,this.velocity.y);
             this.speed=-this.maxSpeed/2;
+            this.velocity.x*=scalar;
+            this.velocity.y*=scalar;
         }
-        if(Math.abs(this.speed) > windAccel){
-            this.speed-=windAccel*Math.sign(this.speed);
-            this.velocity.x-=Math.abs(Math.sin(this.angle))*(windAccel)*Math.sign(this.velocity.x)*Math.sign(this.speed); //need sign and abs bc we want to slow against drift velocity not with angle like breaking
-            this.velocity.y-=Math.abs(Math.cos(this.angle))*(windAccel)*Math.sign(this.velocity.y)*Math.sign(this.speed);
-        }
-        // else if(this.speed<0){
-        //     this.velocity.x+=(this.friction+windAccel)*Math.sign(this.velocity.x);
-        //     this.velocity.y+=(this.friction+windAccel)*Math.sign(this.velocity.y);
-        // }
-        //this.speed=Math.hypot(this.velocity.x, this.velocity.y);
-        // const interpolateVector = {x:this.speed*Math.sin(this.angle),y:this.speed*Math.cos(this.angle)};
+
+        //what to do if sliding or not
         if(this.slide){
-            this.velocity.x = lerp(this.velocity.x, this.speed*Math.sin(this.angle), this.maxSpeed/(this.speed+.001)*.01);
-            this.velocity.y = lerp(this.velocity.y, this.speed*Math.cos(this.angle), this.maxSpeed/(this.speed+.001)*.01);
+            this.velocity.x = lerp(this.velocity.x, this.speed*Math.sin(this.angle), (this.traction/2+.5)*this.maxSpeed/(Math.abs(this.speed)+.001)*.02);
+            this.velocity.y = lerp(this.velocity.y, this.speed*Math.cos(this.angle), (this.traction/2+.5)*this.maxSpeed/(Math.abs(this.speed)+.001)*.02);
+            const scalar=Math.abs(this.speed)/Math.hypot(this.velocity.x,this.velocity.y);
+            this.velocity.x*=scalar;
+            this.velocity.y*=scalar;
         }
         else{
-            // console.log("normalspeed");
-            // this.velocity.x=this.speed*Math.sin(this.angle);
-            // this.velocity.y=this.speed*Math.cos(this.angle);
+            this.velocity.x=this.speed*Math.sin(this.angle);
+            this.velocity.y=this.speed*Math.cos(this.angle);
         }
-       
-        //prob don't need
-        // if(Math.abs(Math.abs(this.velocity.x)-this.speed*Math.sin(this.angle))<.02 && Math.abs(Math.abs(this.velocity.y)-this.speed*Math.sin(this.angle))<.02){
-        //     this.velocity.x=this.speed*Math.sin(this.angle);
-        //     this.velocity.y=this.speed*Math.cos(this.angle);
-        // }
+        //end  sliding when not steering, especially breaking
+        if(!this.controls.left && !this.controls.right && this.speed < .9*this.slideSpeed){
+            this.slide=false;
+        }
+        //end sliding for close enough angle
+        if(this.slide && Math.abs(Math.abs(this.velocity.x)-this.speed*Math.sin(this.angle))<.02 && Math.abs(Math.abs(this.velocity.y)-this.speed*Math.sin(this.angle))<.02){
+            this.slide=false;
+        }
+        
+        //friction when sliding vs windAccel when not
+        if(this.slide && Math.hypot(this.velocity.x,this.velocity.y)!=0){
+            const scalar = Math.abs(this.speed)/Math.hypot(this.velocity.x,this.velocity.y);
+            this.velocity.x*=scalar;
+            this.velocity.y*=scalar;
+        }
+        else if (this.speed!=0){
+            const windAccel = .001*(this.speed*Math.sin(this.angle)*this.velocity.x+this.speed*Math.cos(this.angle)*this.velocity.y);
+            this.speed-=Math.sign(this.speed)*windAccel;
+            this.velocity.x-=windAccel*Math.sin(this.angle);
+            this.velocity.y-=windAccel*Math.cos(this.angle);
+
+        }
+        //too slow
+        if(Math.abs(this.speed)>this.acceleration/2 && this.speed>0){
+            this.velocity.x*=1-this.friction;
+            this.velocity.y*=1-this.friction;
+            this.speed*=1-this.friction;
+        }
+        else if (this.speed>0){
+            this.velocity.x = 0;
+            this.velocity.y = 0;
+            this.speed=0;
+        }
+
+
         this.x-=this.velocity.x;
         this.y-=this.velocity.y;
-        // this.speed=Math.hypot(this.velocity.x, this.velocity.y);
+     
     }
 
     draw(ctx,color,drawSensor=false){

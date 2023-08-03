@@ -100,7 +100,12 @@ function setMaxSpeed(value){
     maxSpeed = value;
     begin();
 }
-function hideTrack(){
+function makeInvincible(){
     playerCar.invincible = !playerCar.invincible;
+    invincible = playerCar.invincible;
     document.getElementById('hide').innerText = playerCar.invincible?"Invincible Off":"Invincible On";
+}
+function setTraction(value){
+    traction = value;
+    begin();
 }

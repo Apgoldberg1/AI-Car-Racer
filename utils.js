@@ -63,9 +63,9 @@ function phaseToLayout(phase){
             rightPanel.innerHTML = `   
             <button onclick='backPhase()'>Back</button>
             <button onclick='savePhysics()'>Save Physics</button>
-            <button id='hide' onclick='hideTrack();'>Invincible On</button>
+            <button id='hide' onclick='makeInvincible();'>Invincible On</button>
             <input type='number' value=5 onchange='setMaxSpeed(this.value)'>Max Speed</input>
-            <input type='number' value=10 onchange=''>Drift</input>
+            <input type='number' value=.5 onchange='setTraction(this.value)'>Traction</input>
             <input type='number' value=.3 onchange='setMutateValue(this.value)'>Acceleratioin</input>
             <button onclick='nextPhase()'>Next</button>
             `;

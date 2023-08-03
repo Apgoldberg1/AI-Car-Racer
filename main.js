@@ -14,13 +14,15 @@ var mutateValue = .3;
 var cars;
 var playerCar;
 let bestCar;
+var invincible=false;
+var traction=1;
 
-var acceleration = .1;
-var breakAccel = .1;
+var acceleration = .05;
+var breakAccel = .05;
 // cars[0].update(road.borders, road.checkPointList);//create polygon
 let pause=true;
 var phase = 0; //0 welcome, 1 track, 2 checkpoints, 3 physics, 4 training
-var maxSpeed = 5;
+var maxSpeed = 3;
 nextPhase();
 function begin(){
     seconds = nextSeconds;

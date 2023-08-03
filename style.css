@@ -2,34 +2,49 @@ body {
     margin:0;
     background: darkgray;
     overflow:hidden;
+    background: rgb(12, 12, 13);
 }
 #verticalButtons{
     position:fixed;
     top:0%;
     left:80%;
+    background: rgb(12, 12, 13);
+    padding: 10px;
+    border-left-color: white;
+    border-left-style: solid;
+    border-left-width: 1px;
 }
 button{
-    width:20vw;
-    height:5vh;
-    font-size:3vh;
+    display: block;
+    width: 100%;
+    font-size:2rem;
+    border-radius:10px;
+}
+input{
+    display: block;
+    width: 100%;
+    font-size:2rem;
     border-radius:10px;
 }
 #myCanvas{
-    background: rgb(52, 52, 52);
+    background: rgb(12, 12, 13);
+    border-width: 1px;
+    border-color: white;
+    border-style: solid;
 }
 #graphCanvas{
+    background: rgb(12, 12, 13);
     position:fixed;
     left:80%;
     top:80%;
     width:20vw;
     height:20vh;
-    background: white;
 }
 #inputCanvas{
+    background: rgb(12, 12, 13);
     position:fixed;
     left:80%;
     top:60%;
     width:20vw;
     height:20vh;
-    background: white;
 }
