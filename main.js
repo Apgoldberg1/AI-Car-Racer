@@ -2,8 +2,10 @@ const canvas=document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 // canvas.width=window.innerWidth*.8;
 // canvas.height=window.innerHeight;
-canvas.width = 1600;
-canvas.height = 900;
+canvas.width = 3200;
+canvas.height = 1800;
+// canvas.style.width="100px";
+// canvas.style.height="100px";
 
 const startInfo = {x: canvas.width - canvas.width/10, y: canvas.height/2, startWidth: canvas.width/40};
 const road=new Road(startInfo);
@@ -16,6 +18,8 @@ var playerCar;
 let bestCar;
 var invincible=false;
 var traction=1;
+
+var frameCount = 0;
 
 var acceleration = .05;
 var breakAccel = .05;
@@ -78,10 +82,9 @@ function nextBatch(){
     begin();
     // location.reload();
 }
-var frameCount = 0;
 function animate(){
-    canvas.style.width = String(Math.min(window.innerWidth*.8, 16/9*window.innerHeight)) + "px";
-    canvas.style.height = String(Math.min(9/16*window.innerWidth*.8, window.innerHeight)) + "px";
+    // canvas.style.width = String(Math.min(window.innerWidth*.8, 16/9*window.innerHeight)) + "px";
+    // canvas.style.height = String(Math.min(9/16*window.innerWidth*.8, window.innerHeight)) + "px";
     road.draw(ctx);
     if(phase==3){
         playerCar.update(road.borders, road.checkPointList);

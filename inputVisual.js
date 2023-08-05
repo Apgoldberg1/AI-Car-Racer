@@ -5,8 +5,6 @@ function inputVisual(controlsArray){
     const rectWidth=130;
     inputCanvas.width = 600;
     inputCanvas.height = 300;
-    inputCanvas.style.width = "20vw";
-    inputCanvas.style.height = "10vw";
 
    boxColor({x:inputCanvas.width/2,y:inputCanvas.height - (.25*inputCanvas.width+rectHeight/2)}, controlsArray.forward, rectWidth, rectHeight, inputCtx);
    boxColor({x:inputCanvas.width/2,y:inputCanvas.height - rectHeight/2 - 10}, controlsArray.reverse, rectWidth, rectHeight, inputCtx);

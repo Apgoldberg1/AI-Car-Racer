@@ -45,41 +45,56 @@ function phaseToLayout(phase){
         case 1:
             // rightPanel.innerHTML = "<button onclick='saveTrack()'>Save Track</button><button onclick='deleteTrack()'>Delete Track</button><button onclick='deleteLastPoint()'>Delete Point</button><button onclick='nextPhase()'>Next</button>";
             rightPanel.innerHTML = `
-                <button onclick='saveTrack()'>Save Track</button>
-                <button onclick='deleteTrack()'>Delete Track</button><button onclick='deleteLastPoint()'>Delete Point</button>
-                <button onclick='nextPhase()'>Next</button>
+                <button class='backNext next' onclick='nextPhase()'>Next</button>
+                <button class='controlButton' onclick='saveTrack()'>Save Track</button>
+                <button class='controlButton' onclick='deleteTrack()'>Delete Track</button>
+                <button class='controlButton' onclick='deleteLastPoint()'>Delete Point</button>
             `;
             break;
         case 2:
             rightPanel.innerHTML = `
-            <button onclick='backPhase()'>Back</button>
-            <button onclick='saveTrack()'>save track</button>
-            <button onclick='deleteLastPoint()'>delete</button>
-            <button onclick='nextPhase()'>Next</button>
+            <button class='backNext back' onclick='backPhase()'>Prev</button>
+            <button class='backNext next' onclick='nextPhase()'>Next</button>
+            <button class='controlButton' onclick='saveTrack()'>save track</button>
+            <button class='controlButton' onclick='deleteLastPoint()'>delete</button>
             `;
             break;
         case 3:
             //add show/hide track
             rightPanel.innerHTML = `   
-            <button onclick='backPhase()'>Back</button>
-            <button onclick='savePhysics()'>Save Physics</button>
-            <button id='hide' onclick='makeInvincible();'>Invincible On</button>
-            <input type='number' value=5 onchange='setMaxSpeed(this.value)'>Max Speed</input>
-            <input type='number' value=.5 onchange='setTraction(this.value)'>Traction</input>
-            <input type='number' value=.3 onchange='setMutateValue(this.value)'>Acceleratioin</input>
-            <button onclick='nextPhase()'>Next</button>
+            <button class='backNext back' onclick='backPhase()'>Prev</button>
+            <button class='backNext next' onclick='nextPhase()'>Next</button>
+            <button class='controlButton' onclick='savePhysics()'>Save Physics</button>
+            <button class='controlButton' id='hide' onclick='makeInvincible();'>Invincible On</button>
+            <br>
+            <input min="5" max="15" value="8" step=".5" onkeydown="return false;" type="range" onchange='setMaxSpeed(this.value)' oninput="document.getElementById('maxSpeedOutput').value = 'Max Speed: ' + this.value" >
+            <output id="maxSpeedOutput">Max Speed: 8</output>
+            <input min="0" max="1" value=".5" step=".01" onkeydown="return false;" type="range" onchange='setTraction(this.value)' oninput="document.getElementById('tractionOutput').value = 'Traction: ' + this.value" >
+            <output id="tractionOutput">Traction: .5</output>
             `;
             break;
         case 4:
             rightPanel.innerHTML = `
-            <button onclick='backPhase()'>Back</button>
-            <button id='pause' onclick='pauseGame()'>Pause</button>
-            <button onclick='destroyBrain(); nextBatch();'>Reset Brain</button>
-            <button onclick='restartBacth();'>Restart Batch</button>
-            <input type='number' value=100 onchange='setN(this.value)'>Batch Size</input>
-            <input type='number' value=10 onchange='setSeconds(this.value)'>Round Length</input>
-            <input type='number' value=.3 onchange='setMutateValue(this.value)'>Mutation</input>
+            <button class='backNext back' onclick='backPhase()'>Prev</button>
+            <button class='controlButton' id='pause' onclick='pauseGame()'>Pause</button>
+            <button class='controlButton' onclick='destroyBrain(); nextBatch();'>Reset Brain</button>
+            <button class='controlButton' onclick='restartBacth();'>Restart Batch</button>
+            <br>
+            
+            <input min="0" max="1000" value="100" step="10" onkeydown="return false;" type="range" onchange='setN(this.value)' oninput="document.getElementById('batchSizeOutput').value = 'Batch Size: ' + this.value" >
+            <output  id="batchSizeOutput">Batch Size: 100</output>
+            <input min="5" max="100" value="10" step="5" onkeydown="return false;" type="range" onchange='setSeconds(this.value)' oninput="document.getElementById('secondsOutput').value = 'Round Length: ' + this.value" >
+            <output id="secondsOutput">Round Length: 10</output>
+            <input min=".001" max=".3" value=".3" onkeydown="return false;" step=".005" type="range" onchange='setMutateValue(this.value)' oninput="document.getElementById('mutateOutput').value = 'Variance: ' + this.value" >
+            <output id="mutateOutput">Variance: .3</output>
             `;
+            // <label>Batch Size</label>
+            // <input type='range' min="0" max="1000" step="100" value=100 onchange='setN(this.value)'>Batch Size</input>
+            // <label>Round Length</label>
+            // <input type='range' min="0" max="100" step="5" value=10 onchange='setSeconds(this.value)'></input>
+            // <label>Mutation</label>
+            // <input type='range' min="0" max="1" step=".05" value=.3 onchange='setMutateValue(this.value)'></input>
+
             setSeconds(10);
             begin();
             break;

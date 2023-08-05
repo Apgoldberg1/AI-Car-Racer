@@ -253,9 +253,9 @@ class roadEditor{
         ctx.fillStyle="red";
         ctx.fill();
         ctx.stroke();
-        ctx.font = "bold 22px Tahoma";
+        ctx.font = "bold 3em Tahoma";
         ctx.textAlign = 'center';
         ctx.fillStyle = "white";
-        ctx.fillText("START",startInfo.x,startInfo.y+startInfo.startWidth+22);
+        ctx.fillText("START",startInfo.x,startInfo.y+ startInfo.startWidth+3*parseFloat(getComputedStyle(document.getElementById("fullDisplay")).fontSize));
     }
 }

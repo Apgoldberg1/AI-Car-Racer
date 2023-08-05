@@ -1,50 +1,98 @@
 body { 
     margin:0;
-    background: darkgray;
+    background: #FFFFFF;
     overflow:hidden;
-    background: rgb(12, 12, 13);
+}
+#fullDisplay{
+    display: grid;
+    grid-template-columns: auto minmax(18ch, 1fr);
+    grid-template-rows: auto 1fr;
+    column-gap: .5em;
+    /* border: 1px solid white; */
+    margin: .5em;
 }
 #verticalButtons{
-    position:fixed;
-    top:0%;
-    left:80%;
-    background: rgb(12, 12, 13);
-    padding: 10px;
-    border-left-color: white;
-    border-left-style: solid;
-    border-left-width: 1px;
-}
-button{
-    display: block;
     width: 100%;
-    font-size:2rem;
-    border-radius:10px;
 }
-input{
+.controlButton{
     display: block;
+    font-size:1rem;
+    box-sizing: border-box;
     width: 100%;
-    font-size:2rem;
-    border-radius:10px;
+    border-width:0px 2px 0px 2px;
+    border-style: solid;
+    border-color: #d38b4b;
+}
+.controlButton:hover{
+    background-color: rgb(240, 225, 201);
+}
+.backNext{
+    border:none;
+    width:40%;
+    display: inline;
+    background-color: transparent;
+    color: #d38b4b;
+    font-weight: bold;
+    padding-top: .3em;
+    margin-bottom: .5em;
+    margin-top: .3em;
+}
+.backNext:hover{
+    color: #824006;
+}
+.next{
+    float:right;
+    text-align: right;
+    padding-right: 10%;
+}
+.back{
+    float:left;
+    text-align: left;
+    padding-left: 10%;
+}
+label{
+    color:white;
+}
+#canvasDiv{
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+    display:flex;
+    width: 100%;
+    max-height: 80vh;
+    justify-content: left;
+    align-items: center;
 }
 #myCanvas{
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
     background: rgb(12, 12, 13);
-    border-width: 1px;
-    border-color: white;
-    border-style: solid;
+    max-height: 100%;
+    max-width:100%;
+    aspect-ratio: 16/9;
 }
 #graphCanvas{
-    background: rgb(12, 12, 13);
-    position:fixed;
-    left:80%;
-    top:80%;
-    width:20vw;
-    height:20vh;
+    display:block;
+    background: white;
 }
+
 #inputCanvas{
-    background: rgb(12, 12, 13);
-    position:fixed;
-    left:80%;
-    top:60%;
-    width:20vw;
-    height:20vh;
+    display: block;
+    min-width:18ch;
+    min-height:9ch;
+    width:100%;
+    max-width:23ch;
+    background: white;
+    border-radius: .5em;
+}
+#rightPanel{
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 2;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    /* justify-content: center; */
+    align-items: center;
+    border-radius: .5em;
+    background-color: white;
+    box-shadow: 0px 0px .5em .2em grey;
 }
