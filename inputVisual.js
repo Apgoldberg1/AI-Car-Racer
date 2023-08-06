@@ -13,11 +13,19 @@ function inputVisual(controlsArray){
 
 }
 function boxColor(coordinate, on, rectWidth, rectHeight, inputCtx){
-
     inputCtx.beginPath();
     inputCtx.fillStyle = on?"blue":"white";
     inputCtx.lineWidth = 4;
     inputCtx.rect(coordinate.x-rectWidth/2,coordinate.y-rectHeight/2,rectWidth,rectHeight);
     inputCtx.fill();
     inputCtx.stroke();
+}
+function showInputCanvas(){
+    document.getElementById("rightPanel").innerHTML += "<canvas id='inputCanvas'></canvas>"
+}
+function deleteInputCanvas(){
+    const toDel = document.getElementById("inputCanvas");
+    if (toDel){
+        toDel.remove();
+    }
 }
