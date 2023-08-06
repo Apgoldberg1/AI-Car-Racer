@@ -92,7 +92,7 @@ function animate(){
         playerCar.update(road.borders, road.checkPointList);
         playerCar.draw(ctx,"red",true);
         playerCar2.update(road.borders, road.checkPointList);
-        playerCar2.draw(ctx,"orange",true);
+        playerCar2.draw(ctx,"blue",true);
     }
     if(phase==4){
         if(frameCount==60*seconds){
@@ -123,15 +123,15 @@ function animate(){
             
             ctx.globalAlpha=.2;
             for(let i=0;i<cars.length;i++){
-                cars[i].draw(ctx,"blue");
+                cars[i].draw(ctx,"rgb(227, 138, 15)");
             }
             ctx.globalAlpha=1;
             if(bestCar){
                 inputVisual(bestCar.controls);
-                bestCar.draw(ctx,"blue",true);
+                bestCar.draw(ctx,"rgb(227, 138, 15)",true);
             }
             playerCar.draw(ctx,"red",true);
-            playerCar2.draw(ctx,"orange",true);
+            playerCar2.draw(ctx,"blue",true);
 
             ctx.restore();
         }

@@ -107,6 +107,9 @@ label{
     #canvasDiv{
         grid-column: 1 / span 2;
     }
+    #fullDisplay{
+        grid-template-columns: 1fr minmax(20ch, 30vw);
+    }
 
     #rightPanel{
         grid-row: 2 / span 1;

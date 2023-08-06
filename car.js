@@ -231,14 +231,15 @@ class Car{
         if(this.damaged){
             ctx.fillStyle="gray";
         }
-        else if (this.controlType == "KEYS"){
+        else if (this.controlType == "KEYS" || this.controlType=="WASD"){
             ctx.globalAlpha=1;
-            ctx.fillStyle="red";
+            ctx.fillStyle=color;
+            // ctx.fillStyle="red";
         }
-        else if (this.controlType == "WASD"){
-            ctx.globalAlpha=1;
-            ctx.fillStyle="orange";
-        }
+        // else if (this.controlType == "WASD"){
+        //     ctx.globalAlpha=1;
+        //     ctx.fillStyle="#d38b4b";
+        // }
         else {
             ctx.fillStyle=color;
         }

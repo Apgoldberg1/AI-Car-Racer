@@ -63,6 +63,9 @@ function phaseToLayout(phase){
             <button class='controlButton' onclick='saveTrack()'>Save Track</button>
             <button class='controlButton' onclick='deleteLastPoint()'>Delete</button>
             `;
+            bottomText.innerHTML = `
+                <h1>Click to add checkpoints</h1>
+            `;
             break;
         case 3:
             deleteInputCanvas();
@@ -78,6 +81,10 @@ function phaseToLayout(phase){
                 <input min="0" max="1" value=".5" step=".01" onkeydown="return false;" type="range" onchange='setTraction(this.value)' oninput="document.getElementById('tractionOutput').value = 'Traction: ' + this.value" >
                 <output id="tractionOutput">Traction: .5</output>
             </div>
+            `;
+            bottomText.innerHTML = `
+                <h1>Tune your physics</h1>
+                <h1>WASD or arrow keys to drive</h1>
             `;
             break;
         case 4:
@@ -95,6 +102,9 @@ function phaseToLayout(phase){
                 <input min=".001" max=".3" value=".3" onkeydown="return false;" step=".005" type="range" onchange='setMutateValue(this.value)' oninput="document.getElementById('mutateOutput').value = 'Variance: ' + this.value" >
                 <output id="mutateOutput">Variance: .3</output>
             </div>
+            `;
+            bottomText.innerHTML = `
+                <h1>Train your model!</h1>
             `;
             showInputCanvas();
             // <label>Batch Size</label>
