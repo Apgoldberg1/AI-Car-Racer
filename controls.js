@@ -9,14 +9,48 @@ class Controls{
             case "KEYS":
                 this.#addKeyboardListeners();
                 break;
-            case "DUMMY":
-                this.forward=true;
+            case "WASD":
+                this.#addWASDListeners();
                 break;
         }
     }
-
+    #addWASDListeners(){
+        document.addEventListener("keydown",(event)=>{
+            switch(event.key){
+                case "a":
+                    console.log('i');
+                    this.left=true;
+                    break;
+                case "d":
+                    this.right=true;
+                    break;
+                case "w":
+                    this.forward=true;
+                    break;
+                case "s":
+                    this.reverse=true;
+                    break;
+            }
+        });
+        document.addEventListener("keyup",(event)=>{
+            switch(event.key){
+                case "a":
+                    this.left=false;
+                    break;
+                case "d":
+                    this.right=false;
+                    break;
+                case "w":
+                    this.forward=false;
+                    break;
+                case "s":
+                    this.reverse=false;
+                    break;
+            }
+        });
+    }
     #addKeyboardListeners(){
-        document.onkeydown=(event)=>{
+        document.addEventListener("keydown",(event)=>{
             switch(event.key){
                 case "ArrowLeft":
                     this.left=true;
@@ -31,8 +65,8 @@ class Controls{
                     this.reverse=true;
                     break;
             }
-        }
-        document.onkeyup=(event)=>{
+        });
+        document.addEventListener("keyup",(event)=>{
             switch(event.key){
                 case "ArrowLeft":
                     this.left=false;
@@ -47,6 +81,6 @@ class Controls{
                     this.reverse=false;
                     break;
             }
-        }
+        });
     }
 }

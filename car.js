@@ -5,7 +5,7 @@ class Car{
         this.y=y;
         this.width=width;
         this.height=height;
-        if(controlType == "KEYS"){
+        if(controlType == "KEYS" || controlType == "WASD"){
             this.invincible=invincible;
         }
 
@@ -45,7 +45,7 @@ class Car{
         if(!this.damaged){
             this.#move();
             this.polygon=this.#createPolygon();
-            if(!this.controlType == "KEYS" || !this.invincible){
+            if(!this.controlType == "KEYS" || !this.controlType == "WASD" || !this.invincible){
                 this.damaged=this.#assessDamage(roadBorders);
             }
             let checkPoint=this.#assessCheckpoint(checkPointList);
@@ -59,7 +59,7 @@ class Car{
                 this.checkPointsPassed.push(checkPoint);
             }
         }
-        else if(this.controlType == "KEYS"){
+        else if(this.controlType == "KEYS" || this.controlType == "WASD"){
             this.delayCounter++;
             if(this.delayCounter==40){
                 this.x = this.origin.x;
@@ -235,6 +235,10 @@ class Car{
             ctx.globalAlpha=1;
             ctx.fillStyle="red";
         }
+        else if (this.controlType == "WASD"){
+            ctx.globalAlpha=1;
+            ctx.fillStyle="orange";
+        }
         else {
             ctx.fillStyle=color;
         }
@@ -245,7 +249,7 @@ class Car{
         }
         ctx.fill();
         ctx.globalAlpha=tempAlpha;
-        if(this.sensor && drawSensor && this.controlType != "KEYS"){
+        if(this.sensor && drawSensor && this.controlType != "KEYS" && this.controlType != "WASD"){
             this.sensor.draw(ctx);
         }
     }

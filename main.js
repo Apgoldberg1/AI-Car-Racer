@@ -15,6 +15,7 @@ var seconds;
 var mutateValue = .3;
 var cars;
 var playerCar;
+var playerCar2;
 let bestCar;
 var invincible=false;
 var traction=1;
@@ -32,6 +33,7 @@ function begin(){
     seconds = nextSeconds;
     pause=false;
     playerCar = new Car(startInfo.x,startInfo.y,30,50,"KEYS",maxSpeed);
+    playerCar2 = new Car(startInfo.x,startInfo.y,30,50,"WASD",maxSpeed);
     cars=generateCars(N);
     // cars[0].update(road.borders, road.checkPointList);//create polygon
     frameCount=0;
@@ -89,6 +91,8 @@ function animate(){
     if(phase==3){
         playerCar.update(road.borders, road.checkPointList);
         playerCar.draw(ctx,"red",true);
+        playerCar2.update(road.borders, road.checkPointList);
+        playerCar2.draw(ctx,"orange",true);
     }
     if(phase==4){
         if(frameCount==60*seconds){
@@ -105,6 +109,7 @@ function animate(){
                 cars[i].update(road.borders, road.checkPointList);
             }
             playerCar.update(road.borders, road.checkPointList);
+            playerCar2.update(road.borders, road.checkPointList);
             // car.update(road.borders, road.checkPointList);
 
             bestCar=cars.find(
@@ -126,6 +131,7 @@ function animate(){
                 bestCar.draw(ctx,"blue",true);
             }
             playerCar.draw(ctx,"red",true);
+            playerCar2.draw(ctx,"orange",true);
 
             ctx.restore();
         }

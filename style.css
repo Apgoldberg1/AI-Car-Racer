@@ -11,7 +11,6 @@ body {
     width:100vw;
     height: 100vh;
     column-gap: .5em;
-    border: 1px solid rgb(204, 60, 60);
     margin: .5em;
 }
 #verticalButtons{
@@ -69,10 +68,12 @@ label{
 #myCanvas{
     grid-row: 1 / span 1;
     grid-column: 1 / span 1;
-    background: rgb(12, 12, 13);
+    /* background: rgb(12, 12, 13); */
+    background: #262626;
     max-height: 100%;
     max-width:100%;
     aspect-ratio: 16/9;
+    box-shadow: 0px 0px .5em .2em rgb(12, 12, 13);
 }
 #graphCanvas{
     display:block;
