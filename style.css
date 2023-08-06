@@ -116,6 +116,12 @@ label{
         margin-bottom: 1em;
         margin-top: .5em;
     }
+  
+}
+@media (max-aspect-ratio: 1/1 ) and (max-height: calc(56.25vw + 17em)){
+    #inputCanvas{
+        display:none;
+    }
 }
 
 #bottomText{
