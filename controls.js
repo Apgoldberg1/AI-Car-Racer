@@ -18,7 +18,6 @@ class Controls{
         document.addEventListener("keydown",(event)=>{
             switch(event.key){
                 case "a":
-                    console.log('i');
                     this.left=true;
                     break;
                 case "d":

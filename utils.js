@@ -52,8 +52,8 @@ function phaseToLayout(phase){
                 <button class='controlButton' onclick='deleteLastPoint()'>Delete Point</button>
             `;
             bottomText.innerHTML = `
-                <h1><span class="red">Left click</span> to add <span class="red">RED</span> points</h1>
-                <h1><span class="blue">Right click</span> to add <span class="blue">BLUE</span> points</h1>
+                <h1><span class="red">Left click</span> to add <span class="red">red</span> points</h1>
+                <h1><span class="blue">Right click</span> to add <span class="blue">blue</span> points</h1>
             `;
             break;
         case 2:
@@ -76,16 +76,22 @@ function phaseToLayout(phase){
             <button class='controlButton' id='hide' onclick='makeInvincible();'>Invincible On</button>
             <br>
             <div id="inputsContainer">
-                <input min="5" max="15" value="8" step=".5" onkeydown="return false;" type="range" onchange='setMaxSpeed(this.value)' oninput="document.getElementById('maxSpeedOutput').value = 'Max Speed: ' + this.value" >
-                <output id="maxSpeedOutput">Max Speed: 8</output>
-                <input min="0" max="1" value=".5" step=".01" onkeydown="return false;" type="range" onchange='setTraction(this.value)' oninput="document.getElementById('tractionOutput').value = 'Traction: ' + this.value" >
-                <output id="tractionOutput">Traction: .5</output>
+                <input min="5" max="15" id="maxSpeedInput" step=".5" onkeydown="return false;" type="range" onchange='setMaxSpeed(this.value)' oninput="document.getElementById('maxSpeedOutput').value = 'Max Speed: ' + this.value" >
+                <output id="maxSpeedOutput" name="Max Speed"></output>
+                <input min="0" max="1" id="tractionInput" step=".01" onkeydown="return false;" type="range" onchange='setTraction(this.value)' oninput="document.getElementById('tractionOutput').value = 'Traction: ' + this.value" >
+                <output id="tractionOutput" name="Traction"></output>
             </div>
             `;
             bottomText.innerHTML = `
                 <h1>Tune your physics</h1>
                 <h1>WASD or arrow keys to drive</h1>
             `;
+            const idArray1 = ["maxSpeed", "traction"];
+            for (let i = 0; i<idArray1.length; i++){
+                document.getElementById(idArray1[i]+"Input").value = window[idArray1[i]];
+                document.getElementById(idArray1[i]+"Output").value = document.getElementById(idArray1[i]+"Output").name + ": " +  window[idArray1[i]];
+                document.getElementById(idArray1[i]+"Input").setAttribute("value", window[idArray1[i]]);
+            }
             break;
         case 4:
             rightPanel.innerHTML = `
@@ -95,17 +101,24 @@ function phaseToLayout(phase){
             <button class='controlButton' onclick='restartBacth();'>Restart Batch</button>
            
             <div id="inputsContainer">
-                <input min="0" max="1000" value="100" step="10" onkeydown="return false;" type="range" onchange='setN(this.value)' oninput="document.getElementById('batchSizeOutput').value = 'Batch Size: ' + this.value" >
-                <output  id="batchSizeOutput">Batch Size: 100</output>
-                <input min="5" max="100" value="10" step="5" onkeydown="return false;" type="range" onchange='setSeconds(this.value)' oninput="document.getElementById('secondsOutput').value = 'Round Length: ' + this.value" >
-                <output id="secondsOutput">Round Length: 10</output>
-                <input min=".001" max=".3" value=".3" onkeydown="return false;" step=".005" type="range" onchange='setMutateValue(this.value)' oninput="document.getElementById('mutateOutput').value = 'Variance: ' + this.value" >
-                <output id="mutateOutput">Variance: .3</output>
+                <input min="0" max="1000" id="batchSizeInput" step="10" onkeydown="return false;" type="range" onchange='setN(this.value)' oninput="document.getElementById('batchSizeOutput').value = 'Batch Size: ' + this.value" >
+                <output  id="batchSizeOutput" name="Batch Size"></output>
+                <input min="5" max="100" id="secondsInput" step="5" onkeydown="return false;" type="range" onchange='setSeconds(this.value)' oninput="document.getElementById('secondsOutput').value = 'Round Length: ' + this.value" >
+                <output id="secondsOutput" name="Seconds"></output>
+                <input min=".001" max=".3" id="mutateValueInput" onkeydown="return false;" step=".001" type="range" onchange='setMutateValue(this.value)' oninput="document.getElementById('mutateValueOutput').value = 'Variance: ' + this.value" >
+                <output id="mutateValueOutput" name="Variance"></output>
             </div>
             `;
             bottomText.innerHTML = `
                 <h1>Train your model!</h1>
             `;
+            const idArray = ["batchSize", "seconds", "mutateValue"];
+            for (let i = 0; i<idArray.length; i++){
+                document.getElementById(idArray[i]+"Input").value = window[idArray[i]];
+                document.getElementById(idArray[i]+"Output").value = document.getElementById(idArray[i]+"Output").name + ": " +  window[idArray[i]];
+                document.getElementById(idArray[i]+"Input").setAttribute("value", window[idArray[i]]);
+            }
+            
             showInputCanvas();
             // <label>Batch Size</label>
             // <input type='range' min="0" max="1000" step="100" value=100 onchange='setN(this.value)'>Batch Size</input>
@@ -113,7 +126,7 @@ function phaseToLayout(phase){
             // <input type='range' min="0" max="100" step="5" value=10 onchange='setSeconds(this.value)'></input>
             // <label>Mutation</label>
             // <input type='range' min="0" max="1" step=".05" value=.3 onchange='setMutateValue(this.value)'></input>
-
+            // savePhysics();
             setSeconds(10);
             begin();
             break;

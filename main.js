@@ -9,8 +9,8 @@ canvas.height = 1800;
 
 const startInfo = {x: canvas.width - canvas.width/10, y: canvas.height/2, startWidth: canvas.width/40};
 const road=new Road(startInfo);
-var N = 2;
-var nextSeconds = -1;
+var batchSize = 10;
+var nextSeconds = 15;
 var seconds;
 var mutateValue = .3;
 var cars;
@@ -27,14 +27,20 @@ var breakAccel = .05;
 // cars[0].update(road.borders, road.checkPointList);//create polygon
 let pause=true;
 var phase = 0; //0 welcome, 1 track, 2 checkpoints, 3 physics, 4 training
-var maxSpeed = 3;
+var maxSpeed = 8;
 nextPhase();
+// if (localStorage.getItem("traction")){
+//     traction=localStorage.getItem("traction");
+// }
+// if (localStorage.getItem("maxSpeed")){
+//     maxSpeed=localStorage.getItem("maxSpeed");
+// }
 function begin(){
     seconds = nextSeconds;
     pause=false;
     playerCar = new Car(startInfo.x,startInfo.y,30,50,"KEYS",maxSpeed);
     playerCar2 = new Car(startInfo.x,startInfo.y,30,50,"WASD",maxSpeed);
-    cars=generateCars(N);
+    cars=generateCars(batchSize);
     // cars[0].update(road.borders, road.checkPointList);//create polygon
     frameCount=0;
     if(localStorage.getItem("bestBrain")){

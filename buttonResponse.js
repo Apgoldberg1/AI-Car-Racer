@@ -40,6 +40,10 @@ function saveTrack(){
     localStorage.setItem("trackOuter",JSON.stringify(road.roadEditor.points2))
     localStorage.setItem("checkPointList",JSON.stringify(road.roadEditor.checkPointListEditor))
 }
+function savePhysics(){
+    localStorage.setItem("maxSpeed", JSON.stringify(maxSpeed));
+    localStorage.setItem("traction", traction);
+}
 function checkPoint(onOff){
     road.roadEditor.checkPointModeChange(onOff);
 }
