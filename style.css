@@ -8,10 +8,11 @@ body {
     /* grid-template-columns: auto minmax(18ch, 1fr); */
     grid-template-columns: auto 1fr;
     grid-template-rows: auto 1fr;
-    width:100vw;
-    height: 100vh;
+    width:calc(100vw - 1em);
+    height: calc(100vh - 1em);
     column-gap: .5em;
     margin: .5em;
+    /* border: 1px solid red; */
 }
 #verticalButtons{
     width: 100%;
@@ -124,18 +125,25 @@ label{
     }
 }
 
-#bottomText{
-    grid-column: 1 / span 1;
-    min-height: 20vh;
-}
 #inputsContainer{
     padding: .2em;
 }
 #bottomText{
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    align-items: left;
-    padding-left:.3em;
+    align-items: left; */
+    text-align: center;
+    grid-column: 1 / span 1;
+    justify-self: center;
+    align-self: center;
+    padding:1em;
+    margin:.5em;
+    background: #FFFFFF;
+    box-shadow: 0px 0px .5em .2em grey;
+    width: fit-content;
+    height: fit-content;
+    border-radius: .5em;
+    color: #d38b4b;
 }
 .red{
     color: red;
@@ -147,5 +155,6 @@ label{
 }
 h1{
     margin:0;
+    font-family: Verdana, sans-serif;
     /* white-space:nowrap; */
 }
