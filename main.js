@@ -29,12 +29,12 @@ let pause=true;
 var phase = 0; //0 welcome, 1 track, 2 checkpoints, 3 physics, 4 training
 var maxSpeed = 8;
 nextPhase();
-// if (localStorage.getItem("traction")){
-//     traction=localStorage.getItem("traction");
-// }
-// if (localStorage.getItem("maxSpeed")){
-//     maxSpeed=localStorage.getItem("maxSpeed");
-// }
+if (localStorage.getItem("traction")){
+    traction=JSON.parse(localStorage.getItem("traction"));
+}
+if (localStorage.getItem("maxSpeed")){
+    maxSpeed=JSON.parse(localStorage.getItem("maxSpeed"));
+}
 function begin(){
     seconds = nextSeconds;
     pause=false;

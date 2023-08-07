@@ -89,7 +89,7 @@ function backPhase(){
     nextPhase();
 }
 function setN(value){
-    N=value;
+    batchSize=value;
 }
 function setSeconds(value){
     nextSeconds=value;
