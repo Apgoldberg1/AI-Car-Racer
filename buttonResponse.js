@@ -17,6 +17,8 @@ function save(){
 }
 function destroyBrain(){
     localStorage.removeItem("bestBrain");
+    localStorage.removeItem("fastLap");
+    fastLap="--";
 }
 function submitTrack(){
     road.getTrack();

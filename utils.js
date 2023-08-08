@@ -104,10 +104,11 @@ function phaseToLayout(phase){
                 <input min="0" max="1000" id="batchSizeInput" step="10" onkeydown="return false;" type="range" onchange='setN(this.value)' oninput="document.getElementById('batchSizeOutput').value = 'Batch Size: ' + this.value" >
                 <output  id="batchSizeOutput" name="Batch Size"></output>
                 <input min="5" max="100" id="secondsInput" step="5" onkeydown="return false;" type="range" onchange='setSeconds(this.value)' oninput="document.getElementById('secondsOutput').value = 'Round Length: ' + this.value" >
-                <output id="secondsOutput" name="Seconds"></output>
+                <output id="secondsOutput" name="Round Length"></output>
                 <input min=".001" max=".3" id="mutateValueInput" onkeydown="return false;" step=".001" type="range" onchange='setMutateValue(this.value)' oninput="document.getElementById('mutateValueOutput').value = 'Variance: ' + this.value" >
                 <output id="mutateValueOutput" name="Variance"></output>
             </div>
+            <div id="timer"></div>
             `;
             bottomText.innerHTML = `
                 <h1>Train your model!</h1>
@@ -127,7 +128,6 @@ function phaseToLayout(phase){
             // <label>Mutation</label>
             // <input type='range' min="0" max="1" step=".05" value=.3 onchange='setMutateValue(this.value)'></input>
             // savePhysics();
-            setSeconds(10);
             begin();
             break;
 

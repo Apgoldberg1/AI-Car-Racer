@@ -8,6 +8,7 @@ class Car{
         if(controlType == "KEYS" || controlType == "WASD"){
             this.invincible=invincible;
         }
+        this.lapTimes='--';
 
         this.velocity={x:0,y:0};
         this.speed=0;
@@ -49,12 +50,21 @@ class Car{
                 this.damaged=this.#assessDamage(roadBorders);
             }
             let checkPoint=this.#assessCheckpoint(checkPointList);
-            if (checkPoint!=-1 && !this.checkPointsPassed.includes(checkPoint)){
-                this.checkPointsCount++;
-                if(this.checkPointsCount >= checkPointList.length){
+            if (checkPoint!=-1 && (!this.checkPointsPassed.includes(checkPoint) || checkPoint == this.checkPointsPassed[0])){
+                if(!this.checkPointsPassed.includes(checkPoint)){
+                    this.checkPointsCount++;
+                }
+                if(this.checkPointsCount >= checkPointList.length && checkPoint == this.checkPointsPassed[0]){
                     this.checkPointsCount=1;
                     this.laps++;
-                    this.checkPointsPassed = [];
+                    console.log(this.laps);
+                    if(this.laps == 1){
+                        this.lapTimes = [parseFloat((frameCount/60).toFixed(2))];
+                    }
+                    else if (this.laps>1){
+                        this.lapTimes.push(parseFloat((frameCount/60-this.lapTimes.reduce((a, b) => a + b, 0)).toFixed(2)));
+                    }
+                    this.checkPointsPassed = [this.checkPointsPassed[0]];
                 }
                 this.checkPointsPassed.push(checkPoint);
             }

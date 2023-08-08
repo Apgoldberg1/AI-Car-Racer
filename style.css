@@ -119,11 +119,21 @@ label{
     }
   
 }
-@media (max-aspect-ratio: 1/1 ) and (max-height: calc(56.25vw + 17em)){
+@media (max-aspect-ratio: 1/1 ) and (max-height: calc(56.25vw + 18em)){
     #inputCanvas{
         display:none;
     }
+    #timer{
+        display:none;
+    }
 }
+#timer{
+    text-align: center;
+}
+p{
+    line-height:.2em;
+}
+
 
 #inputsContainer{
     padding: .2em;

@@ -21,6 +21,7 @@ var invincible=false;
 var traction=1;
 
 var frameCount = 0;
+var fastLap = '--';
 
 var acceleration = .05;
 var breakAccel = .05;
@@ -34,6 +35,9 @@ if (localStorage.getItem("traction")){
 }
 if (localStorage.getItem("maxSpeed")){
     maxSpeed=JSON.parse(localStorage.getItem("maxSpeed"));
+}
+if (localStorage.getItem("fastLap")){
+    fastLap = JSON.parse(localStorage.getItem("fastLap"));
 }
 function begin(){
     seconds = nextSeconds;
@@ -87,6 +91,10 @@ function nextBatch(){
     if(bestCar){
         save();
     }
+    if(bestCar.laps>0 && (Math.min(...bestCar.lapTimes) < fastLap || fastLap=='--')){
+        fastLap = Math.min(...bestCar.lapTimes);
+        localStorage.setItem('fastLap', JSON.stringify(fastLap));
+    }
     begin();
     // location.reload();
 }
@@ -101,6 +109,9 @@ function animate(){
         playerCar2.draw(ctx,"blue",true);
     }
     if(phase==4){
+        const timer = document.getElementById("timer");
+        timer.innerHTML = "<p>Game Time: " + String((frameCount/60).toFixed(2)) + "</p>";
+        timer.innerHTML += "<p>Fast Lap: " + fastLap + "</p>";
         if(frameCount==60*seconds){
             nextBatch();
         }
@@ -118,10 +129,13 @@ function animate(){
             playerCar2.update(road.borders, road.checkPointList);
             // car.update(road.borders, road.checkPointList);
 
-            bestCar=cars.find(
+            testBestCar=cars.find(
                 c=>(c.checkPointsCount+c.laps*road.checkPointList.length)==Math.max(
                     ...cars.map(c=>c.checkPointsCount+c.laps*road.checkPointList.length)
             ));
+            if (testBestCar.checkPointsCount+testBestCar.laps*road.checkPointList.length > bestCar.checkPointsCount+bestCar.laps*road.checkPointList.length){
+                bestCar = testBestCar;
+            }
             // cars[0] = bestCar;
             
 
