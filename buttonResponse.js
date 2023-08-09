@@ -6,14 +6,21 @@ function save(){
     const progressVal = bestCar.checkPointsCount+bestCar.laps*road.checkPointList.length/seconds;
     if(localStorage.getItem("progress")){
         var progressArray = JSON.parse(localStorage.getItem("progress"));
-        progressArray.push(progressVal);
+        progressArray.push(fastLap);
         localStorage.setItem("progress",JSON.stringify(progressArray));
     }
     else{
-        localStorage.setItem("progress",JSON.stringify([progressVal]));
+        localStorage.setItem("progress",JSON.stringify([fastLap]));
     }
     localStorage.setItem("oldBestBrain",(localStorage.getItem("bestBrain")));
     localStorage.setItem("bestBrain",JSON.stringify(bestCar.brain));
+}
+function restoreOldBrain(){
+    localStorage.setItem("bestBrain", localStorage.getItem("oldBestBrain"));
+    restartBatch();
+}
+function resetFastLap(){
+    fastLap = '--';
 }
 function destroyBrain(){
     localStorage.removeItem("bestBrain");
@@ -75,6 +82,7 @@ function nextPhase(){
             phaseToLayout(phase);
             saveTrack();            
             submitTrack();
+            
             break;
         case 4:
             begin();
@@ -99,7 +107,7 @@ function setSeconds(value){
 function setMutateValue(value){
     mutateValue=value;
 }
-function restartBacth(){
+function restartBatch(){
     begin();
 }
 function setMaxSpeed(value){
@@ -108,6 +116,7 @@ function setMaxSpeed(value){
 }
 function makeInvincible(){
     playerCar.invincible = !playerCar.invincible;
+    playerCar2.invincible = !playerCar2.invincible;
     invincible = playerCar.invincible;
     document.getElementById('hide').innerText = playerCar.invincible?"Invincible Off":"Invincible On";
 }

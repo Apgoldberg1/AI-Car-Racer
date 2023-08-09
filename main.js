@@ -99,19 +99,20 @@ function nextBatch(){
     // location.reload();
 }
 function animate(){
+    road.draw(ctx);
     // canvas.style.width = String(Math.min(window.innerWidth*.8, 16/9*window.innerHeight)) + "px";
     // canvas.style.height = String(Math.min(9/16*window.innerWidth*.8, window.innerHeight)) + "px";
-    road.draw(ctx);
+    // road.draw(ctx);
     if(phase==3){
         playerCar.update(road.borders, road.checkPointList);
         playerCar.draw(ctx,"red",true);
         playerCar2.update(road.borders, road.checkPointList);
         playerCar2.draw(ctx,"blue",true);
     }
-    if(phase==4){
+    if(phase==4){        
         const timer = document.getElementById("timer");
         timer.innerHTML = "<p>Game Time: " + String((frameCount/60).toFixed(2)) + "</p>";
-        timer.innerHTML += "<p>Fast Lap: " + fastLap + "</p>";
+        timer.innerHTML += "<p>Fast Lap: " + fastLap.toFixed(2) + "</p>";
         if(frameCount==60*seconds){
             nextBatch();
         }

@@ -98,10 +98,13 @@ function phaseToLayout(phase){
             <button class='backNext back' onclick='backPhase()'>Prev</button>
             <button class='controlButton' id='pause' onclick='pauseGame()'>Pause</button>
             <button class='controlButton' onclick='destroyBrain(); nextBatch();'>Reset Brain</button>
-            <button class='controlButton' onclick='restartBacth();'>Restart Batch</button>
-           
+            <button class='controlButton' onclick='resetFastLap();'>Reset Fast Lap</button>
+            <button class='controlButton' onclick='restartBatch();'>Restart Batch</button>
+            <button class='controlButton' onclick='save(); restartBatch();'>Save Best and Restart</button>
+            <button class='controlButton' onclick='restoreOldBrain();'>Restore Old Brain</button>
+
             <div id="inputsContainer">
-                <input min="0" max="1000" id="batchSizeInput" step="10" onkeydown="return false;" type="range" onchange='setN(this.value)' oninput="document.getElementById('batchSizeOutput').value = 'Batch Size: ' + this.value" >
+                <input min="0" max="2000" id="batchSizeInput" step="10" onkeydown="return false;" type="range" onchange='setN(this.value)' oninput="document.getElementById('batchSizeOutput').value = 'Batch Size: ' + this.value" >
                 <output  id="batchSizeOutput" name="Batch Size"></output>
                 <input min="5" max="100" id="secondsInput" step="5" onkeydown="return false;" type="range" onchange='setSeconds(this.value)' oninput="document.getElementById('secondsOutput').value = 'Round Length: ' + this.value" >
                 <output id="secondsOutput" name="Round Length"></output>
@@ -121,6 +124,8 @@ function phaseToLayout(phase){
             }
             
             showInputCanvas();
+            showGraphCanvas();
+            graphProgress();
             // <label>Batch Size</label>
             // <input type='range' min="0" max="1000" step="100" value=100 onchange='setN(this.value)'>Batch Size</input>
             // <label>Round Length</label>

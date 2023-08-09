@@ -63,8 +63,8 @@ class roadEditor{
         return -1; 
     }
     redraw() {
-        this.canvas = document.getElementById("myCanvas");
-        this.ctx=document.getElementById("myCanvas").getContext("2d");
+        // this.canvas = document.getElementById("myCanvas");
+        // this.ctx=document.getElementById("myCanvas").getContext("2d");
         if (this.points.length > 0) {
             this.ctx.clearRect(0, 0, canvas.width, canvas.height);
             if(this.editMode){

@@ -46,7 +46,7 @@ class Car{
         if(!this.damaged){
             this.#move();
             this.polygon=this.#createPolygon();
-            if(!this.controlType == "KEYS" || !this.controlType == "WASD" || !this.invincible){
+            if((!this.controlType == "KEYS" && !this.controlType == "WASD") || !this.invincible){
                 this.damaged=this.#assessDamage(roadBorders);
             }
             let checkPoint=this.#assessCheckpoint(checkPointList);
@@ -57,7 +57,6 @@ class Car{
                 if(this.checkPointsCount >= checkPointList.length && checkPoint == this.checkPointsPassed[0]){
                     this.checkPointsCount=1;
                     this.laps++;
-                    console.log(this.laps);
                     if(this.laps == 1){
                         this.lapTimes = [parseFloat((frameCount/60).toFixed(2))];
                     }
