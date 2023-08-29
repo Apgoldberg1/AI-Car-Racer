@@ -1,4 +1,4 @@
 # AI-Car-Racer
 A browser based racing game with customizable tracks and evolutionary learning.
-See the project here:
-<iframe width="560" height="315" src="https://www.youtube.com/embed/inHhTo8XcOs?si=Ji75yu43z9xCgGJz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+[![Video](https://github-production-user-asset-6210df.s3.amazonaws.com/73358946/264179178-f28eaa65-4aab-4c17-abf9-db330f3262b9.png)](https://www.youtube.com/watch?v=inHhTo8XcOs){:target="_blank"} 
